@@ -1,22 +1,29 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
-import { signOut } from '@/auth';
+import { signOut } from 'next-auth/react';
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export function SignOutButton() {
   const router = useRouter();
 
   const handleSignOut = async () => {
     try {
-      // Sign out and redirect to sign-in page
+      // First try the client-side signOut
       await signOut({ 
-        redirectTo: '/auth/signin',
-        redirect: true 
+        callbackUrl: '/auth/signin',
+        redirect: false 
       });
+      
+      // Then manually redirect
+      router.push('/auth/signin');
+      router.refresh();
     } catch (error) {
       console.error('Failed to sign out:', error);
-      // Fallback to manual redirect if signOut fails
+      toast.error('Failed to sign out. Please try again.');
+      
+      // Fallback to manual redirect
       router.push('/auth/signin');
       window.location.reload();
     }

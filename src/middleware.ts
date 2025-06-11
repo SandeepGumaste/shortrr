@@ -9,15 +9,15 @@ export default auth(async (req) => {
   const isLegalPage = nextUrl.pathname.startsWith("/legal");
   const isApiAuthRoute = nextUrl.pathname.startsWith('/api/auth');
   const isApiRoute = nextUrl.pathname.startsWith('/api');
+  const isRootPath = nextUrl.pathname === '/';
   
   // List of paths that should not be treated as short URLs
-  const excludedPaths = ['/profile', '/api'];
+  const excludedPaths = ['/profile', '/api', '/auth', '/legal'];
   const isExcludedPath = excludedPaths.some(path => nextUrl.pathname.startsWith(path));
   
   const isShortUrl = !isExcludedPath && 
-    (!nextUrl.pathname.includes('/') || 
-     (nextUrl.pathname.split('/').length === 2 && 
-      nextUrl.pathname !== '/'));
+    !isRootPath &&
+    nextUrl.pathname.split('/').length === 2;
 
   // Apply rate limiting for short URL redirects
   if (isShortUrl) {
