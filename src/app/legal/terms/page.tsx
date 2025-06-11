@@ -77,7 +77,7 @@ export default function TermsOfService() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">8. Contact Information</h2>
               <p>
-                For any questions about these Terms, please contact us at support@shortrr.com
+                For any questions about these Terms, please contact us at sandeepgumaste10@gmail.com
               </p>
             </section>
           </div>
