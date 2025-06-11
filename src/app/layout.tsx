@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "shortrr - URL Shortener",
-  description: "A modern URL shortener with QR code generation and analytics",
-  keywords: ["URL shortener", "link shortener", "QR code", "URL analytics"],
+  description: "A modern URL shortener with QR code generation",
+  keywords: ["URL shortener", "link shortener", "QR code"],
   authors: [{ name: "shortrr" }],
   creator: "shortrr",
   openGraph: {
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://shortrr.com",
     title: "shortrr - URL Shortener",
-    description: "A modern URL shortener with QR code generation and analytics",
+    description: "A modern URL shortener with QR code generation",
     siteName: "shortrr",
   },
   twitter: {
     card: "summary_large_image",
     title: "shortrr - URL Shortener",
-    description: "A modern URL shortener with QR code generation and analytics",
+    description: "A modern URL shortener with QR code generation",
     creator: "@shortrr",
   },
 };
