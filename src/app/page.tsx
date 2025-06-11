@@ -84,7 +84,7 @@ export default function Home() {
           transition={{ duration: 0.5, delay: 1 }}
           className="text-center mt-16 text-sm text-muted-foreground"
         >
-          <p>© 2024 shortrr. All rights reserved.</p>
+          <p>© 2025 shortrr. All rights reserved.</p>
         </motion.div>
       </div>
     </main>
