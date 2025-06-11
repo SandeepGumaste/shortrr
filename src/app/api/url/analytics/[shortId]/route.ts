@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { connectDB } from '@/lib/db/mongoose';
 import { Url } from '@/lib/db/models/url';
@@ -10,8 +10,8 @@ interface Visit {
 }
 
 export async function GET(
-  request: Request,
-  { params }: { params: { shortId: string } }
+  request: NextRequest,
+  context: { params: { shortId: string } }
 ) {
   try {
     const session = await auth();
@@ -23,7 +23,7 @@ export async function GET(
       );
     }
 
-    const shortId = params.shortId;
+    const shortId = context.params.shortId;
     await connectDB();
 
     const url = await Url.findOne({ shortId });
