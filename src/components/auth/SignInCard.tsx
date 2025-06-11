@@ -12,6 +12,7 @@ export function SignInCard() {
       setIsLoading(true);
       await signIn("google", { callbackUrl: "/" });
     } catch (error) {
+      console.error("Error signing in with Google:", error);
       toast.error("Failed to sign in with Google");
     } finally {
       setIsLoading(false);
