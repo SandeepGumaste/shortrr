@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
-import { signOut } from 'next-auth/react';
+import { signOut } from '@/auth';
 import { Button } from "@/components/ui/button";
 
 export function SignOutButton() {
@@ -11,7 +11,7 @@ export function SignOutButton() {
     try {
       // Sign out and redirect to sign-in page
       await signOut({ 
-        callbackUrl: '/auth/signin',
+        redirectTo: '/auth/signin',
         redirect: true 
       });
     } catch (error) {
