@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     }
 
     // Apply rate limiting
-    const headersList = headers();
+    const headersList = await headers();
     const ip = headersList.get('x-forwarded-for') || '127.0.0.1';
     const { success, limit, reset, remaining } = await urlCreationLimiter.limit(ip);
 

@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import type { NextAuthConfig } from "next-auth";
-import Google from "next-auth/providers/google";
 import type { JWT } from "next-auth/jwt";
+import type { Session } from "next-auth";
+import Google from "next-auth/providers/google";
 
 declare module "next-auth" {
   interface Session {
@@ -50,10 +51,10 @@ const config = {
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       if (session.user) {
-        session.user.id = token.userId;
-        session.user.accessToken = token.accessToken;
+        session.user.id = token.userId as string;
+        session.user.accessToken = token.accessToken as string;
       }
       return session;
     },
@@ -67,7 +68,6 @@ const config = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   basePath: '/api/auth',
-  baseUrl: process.env.NEXTAUTH_URL,
 } satisfies NextAuthConfig;
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);

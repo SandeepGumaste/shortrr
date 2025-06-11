@@ -18,6 +18,7 @@ import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Copy, QrCode, Download } from 'lucide-react';
 import QRCode from 'qrcode';
+import Image from 'next/image';
 
 const urlFormSchema = z.object({
   url: z.string().url('Please enter a valid URL'),
@@ -174,10 +175,12 @@ export function UrlShortenerForm() {
 
                 {qrCodeDataUrl && (
                   <div className="flex flex-col items-center gap-2 pt-4 border-t">
-                    <img
+                    <Image
                       src={qrCodeDataUrl}
                       alt="QR Code"
-                      className="w-48 h-48 bg-white p-2 rounded-lg"
+                      width={192}
+                      height={192}
+                      className="bg-white p-2 rounded-lg"
                     />
                     <Button
                       type="button"

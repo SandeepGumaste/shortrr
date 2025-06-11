@@ -3,6 +3,12 @@ import { auth } from '@/auth';
 import { connectDB } from '@/lib/db/mongoose';
 import { Url } from '@/lib/db/models/url';
 
+interface Visit {
+  timestamp: Date;
+  ip: string;
+  userAgent: string;
+}
+
 export async function GET(
   request: Request,
   { params }: { params: { shortId: string } }
@@ -42,7 +48,7 @@ export async function GET(
       redirectUrl: url.redirectUrl,
       createdBy: url.createdBy,
       createdAt: url.createdAt,
-      visitHistory: url.visitHistory.map(visit => ({
+      visitHistory: url.visitHistory.map((visit: Visit) => ({
         timestamp: visit.timestamp,
         ip: visit.ip,
         userAgent: visit.userAgent
