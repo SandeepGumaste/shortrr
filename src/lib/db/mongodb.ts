@@ -11,31 +11,38 @@ interface MongooseCache {
   promise: Promise<typeof mongoose> | null;
 }
 
-const globalMongoose = (global as unknown) as { mongoose: MongooseCache };
+// Declare the global type extension
+declare global {
+  /* eslint-disable-next-line no-var */
+  var mongoose: MongooseCache | undefined;
+}
 
-if (!globalMongoose.mongoose) {
-  globalMongoose.mongoose = { conn: null, promise: null };
+// Initialize the cached connection
+const cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+
+if (!global.mongoose) {
+  global.mongoose = cached;
 }
 
 export async function connectDB() {
-  if (globalMongoose.mongoose.conn) {
-    return globalMongoose.mongoose.conn;
+  if (cached.conn) {
+    return cached.conn;
   }
 
-  if (!globalMongoose.mongoose.promise) {
+  if (!cached.promise) {
     const opts = {
       bufferCommands: false,
     };
 
-    globalMongoose.mongoose.promise = mongoose.connect(MONGODB_URI!, opts);
+    cached.promise = mongoose.connect(MONGODB_URI!, opts);
   }
 
   try {
-    globalMongoose.mongoose.conn = await globalMongoose.mongoose.promise;
+    cached.conn = await cached.promise;
   } catch (e) {
-    globalMongoose.mongoose.promise = null;
+    cached.promise = null;
     throw e;
   }
 
-  return globalMongoose.mongoose.conn;
+  return cached.conn;
 }

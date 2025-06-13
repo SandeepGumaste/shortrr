@@ -8,9 +8,9 @@ A modern, fast, and secure URL shortening service built with Next.js 14 and Mong
 - 🎨 Modern UI with smooth animations
 - 📱 Responsive design for all devices
 - 🔒 Secure authentication with Google
-- 📊 Detailed analytics for each shortened URL
 - 📱 QR code generation
 - 🔍 Custom short URLs (coming soon)
+- 📊 URL Analytics (coming soon)
 - 🌐 API access for developers
 
 ## 🛠️ Tech Stack
@@ -22,7 +22,6 @@ A modern, fast, and secure URL shortening service built with Next.js 14 and Mong
 - **Database:** MongoDB
 - **Authentication:** NextAuth.js
 - **Deployment:** Vercel
-- **Analytics:** Custom implementation
 - **QR Code:** qrcode.js
 
 ## 🚀 Getting Started
@@ -86,15 +85,6 @@ A modern, fast, and secure URL shortening service built with Next.js 14 and Mong
 3. Copy the generated short URL
 4. Optionally generate a QR code
 
-### Analytics
-
-1. Access your dashboard
-2. View detailed analytics for each shortened URL:
-   - Total visits
-   - Visit history
-   - Geographic data
-   - Device information
-
 ## 🔌 API Routes
 
 ### Create Short URL
@@ -106,12 +96,6 @@ Content-Type: application/json
   "redirectUrl": "https://example.com"
 }
 ```
-
-<!-- ### Get URL Analytics
-```http
-GET /api/url/analytics/{shortId}
-Authorization: Bearer {token}
-``` -->
 
 ## 📄 License
 
