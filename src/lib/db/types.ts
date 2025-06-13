@@ -20,6 +20,21 @@ export interface IUser extends Document {
   profilePicture?: string;
   accessToken?: string;
   refreshToken?: string;
+  role: 'user' | 'admin';
+  isActive: boolean;
+  isBlocked: boolean;
+  loginAttempts: number;
+  lastFailedLogin?: Date;
+  lastLoginIP?: string;
+  lastLoginAt: Date;
+  lastSignOutAt?: Date;
+  sessionHistory: {
+    loginAt: Date;
+    signOutAt?: Date;
+    ip: string;
+    userAgent: string;
+  }[];
+  shouldBeBlocked(): boolean;
   createdAt: Date;
   updatedAt: Date;
 }
