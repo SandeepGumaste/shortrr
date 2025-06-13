@@ -3,6 +3,12 @@ import { auth } from '@/auth';
 import { connectDB } from '@/lib/db/mongoose';
 import { User } from '@/lib/db/models/user';
 
+// Types for user updates
+interface UserUpdateData {
+  isBlocked?: boolean;
+  isActive?: boolean;
+}
+
 // Get all users (admin only)
 export async function GET() {
   try {
@@ -73,7 +79,7 @@ export async function PATCH(req: Request) {
 
     await connectDB();
     
-    const updateData: any = {};
+    const updateData: UserUpdateData = {};
     if (typeof isBlocked === 'boolean') updateData.isBlocked = isBlocked;
     if (typeof isActive === 'boolean') updateData.isActive = isActive;
 
@@ -98,4 +104,4 @@ export async function PATCH(req: Request) {
       { status: 500 }
     );
   }
-} 
+}

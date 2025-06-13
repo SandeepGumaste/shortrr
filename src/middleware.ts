@@ -1,8 +1,20 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 import { rateLimiter, urlRedirectLimiter } from '@/lib/rate-limit';
+import { securityHeaders } from './middleware/security';
 
 export default auth(async (req) => {
+  const response = await handleRequest(req);
+  
+  // Apply security headers to all responses
+  Object.entries(securityHeaders).forEach(([key, value]) => {
+    response.headers.set(key, value as string);
+  });
+  
+  return response;
+});
+
+async function handleRequest(req: any) {
   const isLoggedIn = !!req.auth;
   const { nextUrl } = req;
   const isAuthPage = nextUrl.pathname.startsWith("/auth");
@@ -82,7 +94,7 @@ export default auth(async (req) => {
   }
 
   return NextResponse.next();
-});
+}
 
 // Optionally, don't invoke Middleware on some paths
 export const config = {
