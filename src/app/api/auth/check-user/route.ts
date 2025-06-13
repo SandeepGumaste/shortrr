@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     const validationResult = userValidationSchema.safeParse(data);
     if (!validationResult.success) {
       console.error('Validation error:', validationResult.error);
-      return NextResponse.json(
+      return NextResponse.json(   
         { error: 'Invalid input data' },
         { status: 400 }
       );
