@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 import { rateLimiter, urlRedirectLimiter } from '@/lib/rate-limit';
+import { getClientIp } from '@/lib/request-utils';
 
 export default auth(async (req) => {
   const isLoggedIn = !!req.auth;
@@ -21,7 +22,7 @@ export default auth(async (req) => {
 
   // Apply rate limiting for short URL redirects
   if (isShortUrl) {
-    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+    const ip = getClientIp(req.headers);
     const { success, limit, reset, remaining } = await urlRedirectLimiter.limit(ip);
 
     if (!success) {
@@ -43,7 +44,7 @@ export default auth(async (req) => {
 
   // Apply general rate limiting for API routes
   if (isApiRoute && !isApiAuthRoute) {
-    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+    const ip = getClientIp(req.headers);
     const { success, limit, reset, remaining } = await rateLimiter.limit(ip);
 
     if (!success) {

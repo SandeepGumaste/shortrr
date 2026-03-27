@@ -3,6 +3,7 @@ import { auth } from '@/auth';
 import { connectDB } from '@/lib/db/mongoose';
 import { Url } from '@/lib/db/models/url';
 import { urlDeletionLimiter } from '@/lib/rate-limit';
+import { getClientIp } from '@/lib/request-utils';
 import { headers } from 'next/headers';
 
 export async function DELETE(
@@ -21,7 +22,7 @@ export async function DELETE(
 
     // Apply rate limiting
     const headersList = await headers();
-    const ip = headersList.get('x-forwarded-for') || '127.0.0.1';
+    const ip = getClientIp(headersList);
     const { success, limit, reset, remaining } = await urlDeletionLimiter.limit(ip);
 
     if (!success) {
